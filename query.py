@@ -84,15 +84,15 @@ if __name__ == "__main__":
         try:
             print(">>>", end="")
             query = input()
-            if query.startswith("q1"):
+            if query.startswith("q1 "):
                 query = query[3:]
                 queries = query.split(',')
                 print_lines_for_station(queries)
-            elif query.startswith("q2"):
+            elif query.startswith("q2 "):
                 query = query[3:]
                 queries = query.split(',')
                 print_stations_for_line(queries)
-            elif query.startswith("help"):
+            elif query == "help":
                 print_help()
             elif query == "exit":
                 break
