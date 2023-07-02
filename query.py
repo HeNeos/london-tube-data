@@ -38,7 +38,7 @@ def print_lines_for_station(stations):
         cursorObject.execute(query, (station,))
         lines = cursorObject.fetchall()
         for line in lines:
-            unique_lines.add(line)
+            unique_lines.add(line[0])
 
     print("\n".join(list(unique_lines)))
 
@@ -68,37 +68,38 @@ def print_stations_for_line(lines_name):
 
     print("\n".join(list(unique_stations)))
 
-dataBase = mysql.connector.connect(
-    host="localhost",
-    user="heneos",
-    passwd="12345678",
-    database="londonTube"
-)
+if __name__ == "__main__":
+    dataBase = mysql.connector.connect(
+        host="localhost",
+        user="heneos",
+        passwd="12345678",
+        database="londonTube"
+    )
 
-cursorObject = dataBase.cursor()
+    cursorObject = dataBase.cursor()
 
-print_help()
+    print_help()
 
-while True:
-    try:
-        print(">>>", end="")
-        query = input()
-        if query.startswith("q1"):
-            query = query[3:]
-            queries = query.split(',')
-            print_lines_for_station(queries)
-        elif query.startswith("q2"):
-            query = query[3:]
-            queries = query.split(',')
-            print_stations_for_line(queries)
-        elif query.startswith("help"):
-            print_help()
-        elif query == "exit":
+    while True:
+        try:
+            print(">>>", end="")
+            query = input()
+            if query.startswith("q1"):
+                query = query[3:]
+                queries = query.split(',')
+                print_lines_for_station(queries)
+            elif query.startswith("q2"):
+                query = query[3:]
+                queries = query.split(',')
+                print_stations_for_line(queries)
+            elif query.startswith("help"):
+                print_help()
+            elif query == "exit":
+                break
+            else:
+                print("Invalid query, type 'help' for more information.")
+        except (EOFError, KeyboardInterrupt):
             break
-        else:
-            print("Invalid query, type 'help' for more information.")
-    except (EOFError, KeyboardInterrupt):
-        break
 
-cursorObject.close()
-dataBase.close()
+    cursorObject.close()
+    dataBase.close()

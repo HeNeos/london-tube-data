@@ -84,21 +84,22 @@ def create_stationLine_sql():
     dataBase.commit()
 
 
-dataBase = mysql.connector.connect(
-    host="localhost",
-    user="heneos",
-    passwd="12345678",
-    database="londonTube"
-)
+if __name__ == "__main__":
+    dataBase = mysql.connector.connect(
+        host="localhost",
+        user="heneos",
+        passwd="12345678",
+        database="londonTube"
+    )
 
-cursorObject = dataBase.cursor()
+    cursorObject = dataBase.cursor()
 
-create_station_sql()
-create_lines_sql()
-create_stationLine_sql()
+    create_station_sql()
+    create_lines_sql()
+    create_stationLine_sql()
 
-cursorObject.close()
-dataBase.close()
+    cursorObject.close()
+    dataBase.close()
 
 # STATIONS
 # STATION-ID STATION-NAME LONGITUDE LATITUDE
