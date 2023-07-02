@@ -6,14 +6,12 @@ import mysql.connector
 import os
 import json
 
-f = open('train-network.json')
-data = json.load(f)
-
 def delete_table(cursor, table_name):
     cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
 
 def create_station_sql():
     table_name = "stations"
+    delete_table(cursorObject, junction_table)
     delete_table(cursorObject, table_name)
 
     header = f"CREATE TABLE {table_name}(\n"
@@ -40,6 +38,7 @@ def create_station_sql():
 
 def create_lines_sql():
     table_name = "tubeLines"
+    delete_table(cursorObject, junction_table)
     delete_table(cursorObject, table_name)
     
     header = f"CREATE TABLE {table_name}(\n"
@@ -56,7 +55,7 @@ def create_lines_sql():
     dataBase.commit()
 
 def create_stationLine_sql():
-    table_name = "stationLines"
+    table_name = junction_table
     delete_table(cursorObject, table_name)
 
     header = f"CREATE TABLE {table_name}(\n"
@@ -85,6 +84,10 @@ def create_stationLine_sql():
 
 
 if __name__ == "__main__":
+    f = open('train-network.json')
+    data = json.load(f)
+    junction_table = "stationLines"
+
     dataBase = mysql.connector.connect(
         host="localhost",
         user="heneos",
